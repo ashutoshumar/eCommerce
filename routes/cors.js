@@ -1,0 +1,20 @@
+// const express = require('express');
+// const cors = require('cors');
+// const app = express();
+
+// const whitelist = ['http://localhost:3000', 'https://localhost:3443','https://creative-cajeta-34d982.netlify.app'];
+// var corsOptionsDelegate = (req, callback) => {
+//     console.log("1")
+//     var corsOptions;
+//     console.log("req",req.header('Origin'));
+//     if(whitelist.indexOf(req.header('Origin')) !== -1) {
+//         corsOptions = { origin: true };
+//     }
+//     else {
+//         corsOptions = { origin: false };
+//     }
+//     callback(null, corsOptions);
+// };
+
+// exports.cors = cors();
+// exports.corsWithOptions = cors(corsOptionsDelegate);
