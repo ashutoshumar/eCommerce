@@ -2,7 +2,7 @@ import './App.css';
 import { useEffect, useState } from "react";
 import Header from "./component/layout/Header/Header.js";
 import Footer from "./component/layout/Footer/Footer.js";
-import { Route, Routes} from "react-router-dom"
+import {  Route, Routes} from "react-router-dom"
 import WebFont from "webfontloader";
 import React from "react";
 import Home from "./component/Home/Home.js";
@@ -55,6 +55,7 @@ function App() {
         families: ["Roboto", "Droid Sans", "Chilanka"],
       },
     });
+    // console.log(user)
     if(user)
     store.dispatch(getItemsFromCart())
     
@@ -79,8 +80,8 @@ function App() {
      {isAuthenticated && <Route exact path="/account" element={<Profile/>} />}      
      {isAuthenticated && <Route exact path="/me/update" element={<UpdateProfile/>} />} 
      {isAuthenticated && <Route exact  path="/password/update" element={<UpdatePassword/>} />} 
-     {isAuthenticated && <Route exact  path="/password/forgot" element={<ForgotPassword/>} />} 
-     {isAuthenticated && <Route exact path="/password/reset/:token" element={<ResetPassword/>} />}
+     <Route exact  path="/password/forgot" element={<ForgotPassword/>} /> 
+      <Route exact path="/password/reset/:token" element={<ResetPassword/>} />
      <Route exact path="/cart" element={<Cart/>} />
      {isAuthenticated && <Route exact path="/shipping"  element={<Shipping/>} />}
      {isAuthenticated && <Route exact path="/order/confirm"  element={<ConfirmOrder/>} />}
@@ -107,6 +108,7 @@ function App() {
           <Route exact path="/process/payment" element={<PaymentRedirect/>} /> 
         
       )}
+        
     </Routes>
     <Footer />
     </div>
