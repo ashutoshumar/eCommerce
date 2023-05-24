@@ -23,6 +23,7 @@ const ForgotPassword = () => {
     const myForm = new FormData();
 
     myForm.set("email", email);
+    alert.message("Reset Password Mail Is Sent")
     dispatch(forgotPassword(myForm));
   };
 
@@ -51,6 +52,7 @@ const ForgotPassword = () => {
               <form
                 className="forgotPasswordForm"
                 onSubmit={forgotPasswordSubmit}
+                
               >
                 <div className="forgotPasswordEmail">
                   <MailOutlineIcon />
@@ -68,6 +70,7 @@ const ForgotPassword = () => {
                   type="submit"
                   value="Send"
                   className="forgotPasswordBtn"
+                  disabled ={ loading?true:false}
                 />
               </form>
             </div>
