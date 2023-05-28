@@ -23,7 +23,7 @@ const ForgotPassword = () => {
     const myForm = new FormData();
 
     myForm.set("email", email);
-    alert.message("Reset Password Mail Is Sent")
+    alert.success("Reset Password Mail Is Sent")
     dispatch(forgotPassword(myForm));
   };
 
