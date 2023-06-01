@@ -22,7 +22,9 @@ import { Rating } from '@mui/material';
 import { NEW_REVIEW_RESET } from "../../constants/productConstants";
 import { ADD_CART_RESET } from "../../constants/cartConstants";
 import { useParams } from 'react-router-dom';
-import SimpleImageSlider from "react-simple-image-slider";
+// import SimpleImageSlider from "react-simple-image-slider";
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
 const ProductDetails = () => {
   const dispatch = useDispatch();
   const alert = useAlert();
@@ -35,12 +37,27 @@ const ProductDetails = () => {
   const { success, error: reviewError } = useSelector(
     (state) => state.newReview
   );
-  var images = [];
-    if(product.images){
-    product.images.forEach(element => {
-     
-       images.push({url:element.url})
-    });}
+  
+  const responsive = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 4000, min: 3000 },
+      items: 3
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 2
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 1
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1
+    }
+  };
+  
   
   const options = {
     size: "large",
@@ -113,6 +130,7 @@ const ProductDetails = () => {
       alert.success("Review Submitted Successfully");
       dispatch({ type: NEW_REVIEW_RESET });
     }
+    
     dispatch(getProductDetails(id));
   }, [dispatch, id, error, alert, reviewError, success,cartSuccess,cartError]);
 
@@ -124,14 +142,29 @@ const ProductDetails = () => {
         <Fragment>
           <MetaData title={`${product.name} -- ECOMMERCE`} />
           <div className="ProductDetails">
-            <div>
-            <SimpleImageSlider
-            width={500}
-            height={450}
-            images={images}
-            showNavs={true}
-         />
+          
+            <Carousel
+        responsive={responsive}
+         autoPlay={true}
+        swipeable={true}
+       draggable={true}
+       showDots={true}
+       infinite={true}
+         partialVisible={true}
+         dotListClass="custom-dot-list-style"
+      >
+         {product.images && product.images.map((image) => {
+          return (
+            <div >
+              <img src={image.url} alt="movie" />
             </div>
+          );
+        })} 
+        {/* <div>
+          "Hii"
+        </div> */}
+      </Carousel>
+           
 
             <div>
               <div className="detailsBlock-1">

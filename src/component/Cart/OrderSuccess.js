@@ -25,7 +25,7 @@ const OrderSuccess = () => {
     dispatch({ type: DELETE_ALL_CART_RESET });
     }
 
-    dispatch(removeAllCart());
+    
   }, [dispatch,alert,error,isAllDeleted]);
 
   return (

@@ -46,7 +46,7 @@ function App() {
   const isAdmin = (role==="admin")?true:false
   async function getStripeApiKey() {
     const { data } = await axios.get("/api/v1/stripeapikey");
-
+    
     setStripeApiKey(data.stripeApiKey);
   }
   useEffect(() => {
@@ -56,8 +56,7 @@ function App() {
       },
     });
     // console.log(user)
-    if(user)
-    store.dispatch(getItemsFromCart())
+   
     
     store.dispatch(loadUser());
     getStripeApiKey();
@@ -66,7 +65,7 @@ function App() {
   return (
     <div>
     <Header/>
-    {isAuthenticated && <UserOptions user={user} />}
+    {isAuthenticated && <UserOptions user={user}  />}
    
     <Routes>
      <Route exact path="/" element={ <Home/>} /> 
@@ -98,16 +97,18 @@ function App() {
      {isAdmin && <Route exact path="/admin/user/:id"  element={<UpdateUser/>} />}
      {isAdmin && <Route exact  path="/admin/reviews"  element={<ProductReviews/>} />}
   
-        <Route
+      
+    {stripeApiKey && (
+       
+          <Route exact path="/process/payment" element={<PaymentRedirect stripeApiKey={stripeApiKey}/>} /> 
+        
+      )}
+
+          <Route
           element={
             window.location.pathname === "/process/payment" ? null : NotFound
           }
         />
-    {stripeApiKey && (
-       
-          <Route exact path="/process/payment" element={<PaymentRedirect/>} /> 
-        
-      )}
         
     </Routes>
     <Footer />

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import "./Header.css";
 import { SpeedDial, SpeedDialAction } from '@mui/material';
 import { Backdrop} from '@mui/material';
@@ -10,26 +10,37 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { useNavigate } from "react-router-dom";
 import { useAlert } from "react-alert";
 import { logout } from "../../../actions/userAction";
-import { useDispatch, useSelector } from "react-redux";
-
+import { useDispatch,useSelector } from "react-redux";
+import { clearErrors,getItemsFromCart } from "../../../actions/cartAction";
 const UserOptions = ({ user }) => {
-  const { cartItems } = useSelector((state) => state.cart);
-
+  
+  const { cartItems,loading, error } = useSelector((state) => state.cart);
+  let length = 0
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const alert = useAlert();
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+    dispatch(getItemsFromCart());
+  }, [dispatch,error,alert]);
+  if(!loading && !error)
+  {
+    length = cartItems.length
+  }
   const options = [
     { icon: <ListAltIcon />, name: "Orders", func: orders },
     { icon: <PersonIcon />, name: "Profile", func: account },
     {
       icon: (
         <ShoppingCartIcon
-          style={{ color: cartItems.length > 0 ? "tomato" : "unset" }}
+          style={{ color: length > 0 ? "tomato" : "unset" }}
         />
       ),
-      name: `Cart(${cartItems.length})`,
+      name: `Cart(${length})`,
       func: cart,
     },
     { icon: <ExitToAppIcon />, name: "Logout", func: logoutUser },
